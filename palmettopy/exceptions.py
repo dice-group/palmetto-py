@@ -12,3 +12,10 @@ class EndpointDown(Exception):
 
     def __init__(self, endpoint):
         self.endpoint = endpoint
+
+
+class WrongContentType(Exception):
+    """Raised when content type is not available."""
+
+    def __init__(self, content_type):
+        self.content_type = content_type

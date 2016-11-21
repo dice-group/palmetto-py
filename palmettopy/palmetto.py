@@ -1,6 +1,6 @@
 import requests
 
-from .exceptions import CoherenceTypeNotAvailable, EndpointDown
+from .exceptions import CoherenceTypeNotAvailable, EndpointDown, WrongContentType
 
 class Palmetto(object):
     all_coherence_types = [
@@ -23,14 +23,14 @@ class Palmetto(object):
         payload["words"] = " ".join(words)
         r = requests.post(request_uri, data=payload)
         if(not r.ok):
-            raise EndpointDown(coherence_uri)
+            raise EndpointDown(request_uri)
 
         if content_type == "text":
             return r.text
         elif content_type == "bytes":
             return r.content
         else:
-            raise Exception("Wrong content type")
+            raise WrongContentType(content_type)
 
     def _get_df(self, words):
         df = self._request_by_service(words, service_type="df", content_type="bytes")
