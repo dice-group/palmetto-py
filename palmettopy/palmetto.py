@@ -13,23 +13,36 @@ class Palmetto(object):
         ]
 
     def __init__(self,
-        coherence_uri="http://palmetto.aksw.org/palmetto-webapp/service/"):
-        self.coherence_uri = coherence_uri
+        palmetto_uri="http://palmetto.aksw.org/palmetto-webapp/service/"):
+        self.palmetto_uri = palmetto_uri
+
+    def _request_by_service(self, words, service_type, content_type="text"):
+        request_uri = self.palmetto_uri + service_type
+
+        payload = {}
+        payload["words"] = " ".join(words)
+        r = requests.post(request_uri, data=payload)
+        if(not r.ok):
+            raise EndpointDown(coherence_uri)
+
+        if content_type == "text":
+            return r.text
+        elif content_type == "bytes":
+            return r.content
+        else:
+            raise Exception("Wrong content type")
+
+    def _get_df(self, words):
+        df = self._request_by_service(words, service_type="df", content_type="bytes")
+        return df
 
     def _get_coherence(self, words, coherence_type):
         if coherence_type not in self.all_coherence_types:
             raise CoherenceTypeNotAvailable(coherence_type)
 
-        coherence_uri = self.coherence_uri + coherence_type
+        coherence = self._request_by_service(words, coherence_type)
 
-        payload = {}
-        payload["words"] = " ".join(words)
-        r = requests.post(coherence_uri, data=payload)
-        if(not r.ok):
-            raise EndpointDown(coherence_uri)
-        coherence = float(r.text)
-
-        return coherence
+        return float(coherence)
 
     def get_coherence(self, words, coherence_type="cv"):
         """
