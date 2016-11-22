@@ -18,6 +18,10 @@ def test_get_coherence(capsys, words):
     coherence = palmetto.get_coherence(words)
     assert(coherence == 0.5678879445677241)
 
+def test_get_coherence_fast(capsys, words):
+    palmetto = Palmetto()
+    coherence = palmetto.get_coherence_fast(words)
+    assert(coherence == 50)
 
 def test_wrong_endpoint(words):
     palmetto = Palmetto("http://example.com/nothinghere/")
