@@ -33,6 +33,14 @@ words = ["cake", "apple", "banana", "cherry", "chocolate"]
 palmetto.get_coherence(words, coherence_type="cv")
 ```
 
+You can also calculate fast coherence using document frequencies for terms using get_coherence_fast method as follows:
+```
+from palmettopy.palmetto import Palmetto
+palmetto = Palmetto("http://example.com/myownendpoint")
+words = ["cake", "apple", "banana", "cherry", "chocolate"]
+palmetto.get_coherence_fast(words)
+```
+
 ### References
 * [1] [Exploring the Space of Topic Coherence Measures by Michael Röder, Andreas Both, and Alexander Hinneburg in Proceedings of the eight International Conference on Web Search and Data Mining, Shanghai, February 2-6](http://svn.aksw.org/papers/2015/WSDM_Topic_Evaluation/public.pdf)
 * [2] [Palmetto project page on AKSW research group web site](http://aksw.org/Projects/Palmetto.html)
