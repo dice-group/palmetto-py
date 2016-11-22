@@ -52,9 +52,20 @@ palmetto.get_coherence_fast(words)
   make test
 ```
 
+## TODOs
+Implement coherence calculation for two words as follows:
+```
+Two words w_i, w_j with two sets s_i, s_j, their intersection set s_ij (|s| is the size of these sets) and the size of the corpus C:
+P(w_i,w_j)/(P(w_i)*P(w_j))
+= (|s_ij| / C)/((|s_i| / C)*(|s_j| / C))
+= (s_ij * C)/(|s_i|*|s_j|)
+```
+No need to calculate the logarithm as this will not affect the ranking.
+
 ## Contributors
 
 Ivan Ermilov: [my github account](https://github.com/earthquakesan)
+Michael Roeder: [github account](https://github.com/MichaelRoeder)
 
 ## License
 
