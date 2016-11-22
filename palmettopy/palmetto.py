@@ -87,7 +87,7 @@ class Palmetto(object):
         """
         return self._get_coherence(words, coherence_type)
 
-    def get_coherence_fast(self, words, coherence_type="df"):
+    def get_coherence_fast(self, words):
         """
             Retrieve coherence based on document frequencies.
 
