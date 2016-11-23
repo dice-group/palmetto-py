@@ -1,6 +1,6 @@
 """Fast coherence calculation from DF."""
 
-def calculate_coherence_fast(words, doc_id_sets, corpus_size=10000000):
+def calculate_coherence_fast(words, doc_id_sets, corpus_size=4264684):
     word_pairs = _get_word_pairs(words)
     coherences = []
     for word_pair in word_pairs:

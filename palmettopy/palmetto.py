@@ -89,5 +89,4 @@ class Palmetto(object):
         """
         df_bytes = self._get_df(words)
         doc_id_sets = self._parse_df_stream_to_doc_ids(df_bytes)
-        #TODO: get the actual corpus size
-        return calculate_coherence_fast(words, doc_id_sets, corpus_size=10000000)
+        return calculate_coherence_fast(words, doc_id_sets, corpus_size=4264684)
