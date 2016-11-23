@@ -1,6 +1,7 @@
 import requests
 from io import BytesIO
 
+from .fastcoherence import calculate_coherence_fast
 from .exceptions import CoherenceTypeNotAvailable, EndpointDown, WrongContentType
 
 class Palmetto(object):
@@ -59,15 +60,8 @@ class Palmetto(object):
 
         return doc_ids
 
-
     def convert_4_bytes_to_int(self, _bytes):
         return int.from_bytes(_bytes, byteorder="big")
-
-    def _calculate_intersection_for_doc_ids(self, doc_id_sets):
-        _fix_doc_id_set = doc_id_sets[0]
-        for i in range(1, len(doc_id_sets)):
-            _fix_doc_id_set.intersection_update(doc_id_sets[i])
-        return len(_fix_doc_id_set)
 
     def _get_coherence(self, words, coherence_type):
         if coherence_type not in self.all_coherence_types:
@@ -95,4 +89,5 @@ class Palmetto(object):
         """
         df_bytes = self._get_df(words)
         doc_id_sets = self._parse_df_stream_to_doc_ids(df_bytes)
-        return self._calculate_intersection_for_doc_ids(doc_id_sets)
+        #TODO: get the actual corpus size
+        return calculate_coherence_fast(words, doc_id_sets, corpus_size=10000000)

@@ -3,7 +3,7 @@
 import pytest
 
 from palmettopy.palmetto import Palmetto
-from palmettopy.exceptions import CoherenceTypeNotAvailable, EndpointDown
+from palmettopy.exceptions import CoherenceTypeNotAvailable, EndpointDown, WrongContentType
 
 
 @pytest.fixture
@@ -39,3 +39,13 @@ def test_all_coherence_types(words):
     palmetto = Palmetto()
     for coherence_type in palmetto.all_coherence_types:
         palmetto.get_coherence(words, coherence_type=coherence_type)
+
+def test_wrong_content_type(words):
+    palmetto = Palmetto()
+    with pytest.raises(WrongContentType):
+        palmetto._request_by_service(words, "cv", "bla")
+
+def test_all_content_types(words):
+    palmetto = Palmetto()
+    for content_type in ["text", "bytes"]:
+        palmetto._request_by_service(words, "umass", content_type)
