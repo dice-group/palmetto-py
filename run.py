@@ -1,5 +1,9 @@
 from palmettopy.palmetto import Palmetto
-words = ["cherry", "pie", "cream", "apple", "orange", "banana"]
+words = ["cherry", "pie", "cr_eam", "apple", "orange", "banana", "pineapple", "plum", "pig", "cra_cker", "so_und", "kit"]
+#words = ['label', 'type', 'character', 'subject', 'discipline', 'topic', 'national', 'home_page', 'foundation', 'basis', 'foundation_garment', 'initiation']
+#words = ['label', 'type', 'character', 'subject', 'discipline', 'topic', 'national', 'home_page', 'foundation', 'basis', 'foundation_garment']
+#words = ['label', 'type', 'character', 'subject', 'discipline', 'topic', 'national', 'home_page', 'foundation', 'basis']
 palmetto = Palmetto()
-print(palmetto.get_coherence_fast(words))
+palmetto.get_df_for_words(words)
+#print(palmetto.get_coherence_fast(words))
 #print(palmetto.get_coherence(words))
