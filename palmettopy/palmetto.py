@@ -38,18 +38,31 @@ class Palmetto(object):
         df = self._request_by_service(words, service_type="df", content_type="bytes")
         return df
 
-    def _parse_df_stream_to_doc_ids(self, df):
+    def _parse_df_stream_to_doc_ids(self, words, df):
         df_stream = BytesIO(df)
         doc_id_sets = []
+        _words = list(reversed(words[:]))
         while True:
             position_before_scan = df_stream.tell()
             doc_ids = self._get_next_set_of_documents(df_stream)
             if doc_ids:
-                doc_id_sets.append(set(doc_ids))
+                word = _words.pop()
+                doc_id_sets.append((word, set(doc_ids)))
             position_after_scan = df_stream.tell()
             if position_before_scan == position_after_scan:
                 break
         return doc_id_sets
+
+    def get_df_for_words(self, words):
+        """
+        Return DF for each of the words.
+
+        Return data structure as follows:
+        [(word_a, set()), (word_b, set()), ...], 
+        where set() is a set of all document ids containing word
+        """
+        df_stream = self._get_df(words)
+        return self._parse_df_stream_to_doc_ids(words, df_stream)
 
     def _get_next_set_of_documents(self, byte_buffer):
         doc_ids = []
@@ -87,6 +100,5 @@ class Palmetto(object):
 
             Not normalized, i.e. can be any number > 0.
         """
-        df_bytes = self._get_df(words)
-        doc_id_sets = self._parse_df_stream_to_doc_ids(df_bytes)
+        doc_id_sets = self.get_df_for_words(words)
         return calculate_coherence_fast(words, doc_id_sets, corpus_size=4264684)
