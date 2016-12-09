@@ -20,6 +20,13 @@ def words_underscore():
     return words
 
 
+@pytest.fixture
+def words_no_results():
+    """Load test data fixture."""
+    words = ['label', 'type', 'character', 'subject', 'discipline', 'topic', 'national', 'familycolor', 'fam', 'glotto', 'isoexception']
+    return words
+
+
 def test_get_coherence(capsys, words):
     palmetto = Palmetto()
     coherence = palmetto.get_coherence(words)
@@ -77,7 +84,18 @@ def test_get_df_for_words_underscore(words_underscore):
     """
     palmetto = Palmetto()
     doc_ids = palmetto.get_df_for_words(words_underscore)
-    with pytest.raises(IndexError):
-        for i in range(0, len(words_underscore)):
-            assert(doc_ids[i][0] == words_underscore[i])
+    for i in range(0, len(words_underscore)):
+        assert(doc_ids[i][0] == words_underscore[i])
+
+
+def test_get_df_for_words_with_no_results(words_no_results):
+    """
+        This test case fails for some unknown reason
+
+        Fails. Palmetto can not handle underscores.
+    """
+    palmetto = Palmetto()
+    doc_ids = palmetto.get_df_for_words(words_no_results)
+    for i in range(0, len(words_no_results)):
+        assert(doc_ids[i][0] == words_no_results[i])
 

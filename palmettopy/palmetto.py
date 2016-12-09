@@ -45,9 +45,12 @@ class Palmetto(object):
         while True:
             position_before_scan = df_stream.tell()
             doc_ids = self._get_next_set_of_documents(df_stream)
-            if doc_ids:
+            if doc_ids and _words:
                 word = _words.pop()
                 doc_id_sets.append((word, set(doc_ids)))
+            elif _words:
+                word = _words.pop()
+                doc_id_sets.append((word, set([])))
             position_after_scan = df_stream.tell()
             if position_before_scan == position_after_scan:
                 break
