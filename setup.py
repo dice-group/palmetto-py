@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'palmettopy',
   packages = ['palmettopy'], # this must be the same as the name above
-  version = 'v3.1',
+  version = 'v3.2',
   description = 'Palmetto Python Interface',
   author = 'Ivan Ermilov',
   author_email = 'ivan.s.ermilov@gmail.com',
