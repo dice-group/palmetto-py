@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python endpointtest.py
+python3 endpointtest.py
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 0 ];then
