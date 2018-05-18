@@ -1,21 +1,23 @@
 import requests
+import socket
 from io import BytesIO
 
 from .fastcoherence import calculate_coherence_fast
 from .exceptions import CoherenceTypeNotAvailable, EndpointDown, WrongContentType
 
+
 class Palmetto(object):
     all_coherence_types = [
-            "ca",
-            "cp",
-            "cv",
-            "npmi",
-            "uci",
-            "umass"
-        ]
+        "ca",
+        "cp",
+        "cv",
+        "npmi",
+        "uci",
+        "umass"
+    ]
 
     def __init__(self,
-        palmetto_uri="http://palmetto.aksw.org/palmetto-webapp/service/"):
+                 palmetto_uri="http://palmetto.aksw.org/palmetto-webapp/service/"):
         self.palmetto_uri = palmetto_uri
 
     def _request_by_service(self, words, service_type, content_type="text"):
@@ -23,7 +25,11 @@ class Palmetto(object):
 
         payload = {}
         payload["words"] = " ".join(words)
-        r = requests.post(request_uri, data=payload)
+        try:
+            r = requests.post(request_uri, data=payload, timeout=5)
+        except BaseException:
+            raise EndpointDown(request_uri)
+
         if(not r.ok):
             raise EndpointDown(request_uri)
 
@@ -61,7 +67,7 @@ class Palmetto(object):
         Return DF for each of the words.
 
         Return data structure as follows:
-        [(word_a, set()), (word_b, set()), ...], 
+        [(word_a, set()), (word_b, set()), ...],
         where set() is a set of all document ids containing word
         """
         df_stream = self._get_df(words)
