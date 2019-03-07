@@ -1,6 +1,8 @@
 # palmetto-py
 Python interface for [Palmetto](https://github.com/AKSW/Palmetto)
 
+NOTE: If palmetto endpoint is down, [create issue in palmetto repository](https://github.com/dice-group/Palmetto).
+
 ## How to use
 First install palmettopy from the pipy:
 ```
