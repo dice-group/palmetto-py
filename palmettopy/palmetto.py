@@ -17,20 +17,19 @@ class Palmetto(object):
     ]
 
     def __init__(self,
-                 palmetto_uri="http://palmetto.aksw.org/palmetto-webapp/service/"):
+                 palmetto_uri="http://palmetto.aksw.org/palmetto-webapp/service/", timeout=5):
         self.palmetto_uri = palmetto_uri
+        self.timeout = timeout
 
     def _request_by_service(self, words, service_type, content_type="text"):
-        request_uri = self.palmetto_uri + service_type
-
-        payload = {}
-        payload["words"] = " ".join(words)
+        request_uri = self.palmetto_uri + service_type + "?words=" + "%20".join(words)
         try:
-            r = requests.post(request_uri, data=payload, timeout=5)
+            r = requests.get(request_uri, timeout=self.timeout)
         except BaseException:
             raise EndpointDown(request_uri)
 
         if(not r.ok):
+            print(r.status_code)
             raise EndpointDown(request_uri)
 
         if content_type == "text":
@@ -93,11 +92,12 @@ class Palmetto(object):
 
         return float(coherence)
 
-    def get_coherence(self, words, coherence_type="cv"):
+    def get_coherence(self, words, coherence_type="cp"):
         """
             Return a coherence of a list of words.
 
-            Default coherence type: cv -- the best performing coherence
+            Default coherence type: cp
+
             Input: a list of words, i.e. ['pen', 'pineapple', 'apple']
             Output: a float number less than 1, i.e. 0.53493
         """
