@@ -17,22 +17,22 @@ words = ["cake", "apple", "banana", "cherry", "chocolate"]
 palmetto.get_coherence(words)
 ```
 
-By default, this interface uses "cv" coherence type (the best performing according to the publication [1]). 
+By default, this interface uses "cp" coherence type. 
 The coherence type can be customized as follows:
 ```
 from palmettopy.palmetto import Palmetto
 palmetto = Palmetto()
 words = ["cake", "apple", "banana", "cherry", "chocolate"]
-palmetto.get_coherence(words, coherence_type="cv")
+palmetto.get_coherence(words, coherence_type="cp")
 ```
-The available coherence types are "ca", "cp", "cv", "npmi", "uci", and "umass".
+The available coherence types are "ca", "cp", "cv", "npmi", "uci", and "umass". (Please note that "cv" is not recommended anymore.)
 
 The default endpoint is run by AKSW research group [2]. If you want to run your own endpoint, you can customize the interface as follows:
 ```
 from palmettopy.palmetto import Palmetto
 palmetto = Palmetto("http://example.com/myownendpoint")
 words = ["cake", "apple", "banana", "cherry", "chocolate"]
-palmetto.get_coherence(words, coherence_type="cv")
+palmetto.get_coherence(words, coherence_type="cp")
 ```
 
 You can also calculate fast coherence using document frequencies for terms using get_coherence_fast method as follows:
@@ -74,7 +74,7 @@ No need to calculate the logarithm as this will not affect the ranking.
 
 ## Contributors
 
-Ivan Ermilov: [my github account](https://github.com/earthquakesan)
+Ivan Ermilov: [github account](https://github.com/earthquakesan)
 Michael Roeder: [github account](https://github.com/MichaelRoeder)
 
 ## License
