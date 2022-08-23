@@ -27,10 +27,10 @@ palmetto.get_coherence(words, coherence_type="cp")
 ```
 The available coherence types are "ca", "cp", "cv", "npmi", "uci", and "umass". (Please note that "cv" is not recommended anymore.)
 
-The default endpoint is run by AKSW research group [2]. If you want to run your own endpoint, you can customize the interface as follows:
+The default endpoint is run by AKSW research group [2]. If you want to run your own endpoint (e.g., `"http://example.com/myownendpoint"`), you can customize the interface as follows:
 ```
 from palmettopy.palmetto import Palmetto
-palmetto = Palmetto("http://example.com/myownendpoint")
+palmetto = Palmetto("http://example.com/myownendpoint/service/")
 words = ["cake", "apple", "banana", "cherry", "chocolate"]
 palmetto.get_coherence(words, coherence_type="cp")
 ```
